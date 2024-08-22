@@ -60,7 +60,7 @@ def run_gandlf(config, parent):
     """
     exit_status = os.system(
         f"gandlf generate-metrics -c {config} -i " +
-        os.path.join(parent, "data.csv") +
+        + os.path.join(parent, "data.csv")
         f" -o {os.path.join(parent, 'results.json')}"
     )
     exit_code = os.WEXITSTATUS(exit_status)
