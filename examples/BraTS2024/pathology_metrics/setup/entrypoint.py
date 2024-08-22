@@ -77,7 +77,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--config", metavar="", type=str, required=True)
     parser.add_argument("--predictions", metavar="", type=str, required=True)
-    parser.add_argument("--output_file", metavar="", type=str, default=None)
+    parser.add_argument("--output_path", metavar="", type=str, default=None)
     parser.add_argument("--labels", metavar="", type=str, required=True)
 
     args = parser.parse_args()
@@ -85,3 +85,9 @@ if __name__ == "__main__":
 
     create_csv(args.predictions, args.labels, parent_dir)
     run_gandlf(args.output_file, args.config, parent_dir)
+
+    # Convert results from JSON to YAML.
+    with open(os.path.join(parent_dir, 'results.json')) as f, \
+         open(args.output_path, "w") as out:
+        results = json.load(f)
+        yaml.dump(results, out)
