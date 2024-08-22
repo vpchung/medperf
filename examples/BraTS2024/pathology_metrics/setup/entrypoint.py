@@ -91,3 +91,7 @@ if __name__ == "__main__":
          open(args.output_path, "w") as out:
         results = json.load(f)
         yaml.dump(results, out)
+
+    # Clean up and remove intermediate files saved to output folder.
+    os.remove(os.path.join(parent_dir, "data.csv"))
+    os.remove(os.path.join(parent_dir, "results.json"))
