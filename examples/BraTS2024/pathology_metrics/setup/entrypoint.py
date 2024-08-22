@@ -58,7 +58,7 @@ def create_csv(predictions, labels, parent):
     res.to_csv(os.path.join(parent, "data.csv"), index=False)
 
 
-def run_gandlf(output_file, config, parent):
+def run_gandlf(config, parent):
     """
     A function that calls GaNDLF's generate metrics command with the previously created csv.
 
@@ -86,7 +86,7 @@ if __name__ == "__main__":
     parent_dir = "/mlcube_io2"
 
     create_csv(args.predictions, args.labels, parent_dir)
-    run_gandlf(args.output_file, args.config, parent_dir)
+    run_gandlf(args.config, parent_dir)
 
     # Convert results from JSON to YAML.
     with open(os.path.join(parent_dir, "results.json")) as f, \
