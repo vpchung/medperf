@@ -9,7 +9,7 @@
 name: MLCommons GaNDLF BraTS2024 Pathology Metrics
 description: Contains functionality for calculating BraTS2024 pathology metrics.
 authors: 
- - {name: "Sage Challenges and Benchmarking Team", email: "cnb@sagebase.org", org: "Sage Bionetworks" }
+ - {name: "Sage CNB Team", email: "cnb@sagebase.org", org: "Sage Bionetworks" }
 
 ## Specifies hardware and software requirements.
 platform:
@@ -21,7 +21,7 @@ platform:
 
 docker:
   # The image tag that will be built/pulled/used. Change to suit your organization/model:version.
-  image: ghcr.io/vpchung/brats2024-path-metricsl:0.0.0
+  image: ghcr.io/vpchung/brats2024-path-metrics:0.0.0
   
   ## Generally, these build options will only be needed by GaNDLF maintainers.
   # Docker build context relative to $MLCUBE_ROOT. (`gandlf deploy` can handle this automatically.)
