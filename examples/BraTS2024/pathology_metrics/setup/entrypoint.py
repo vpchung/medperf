@@ -71,7 +71,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--config", metavar="", type=str, required=True)
     parser.add_argument("--predictions", metavar="", type=str, required=True)
-    parser.add_argument("--output_path", metavar="", type=str, default=None)
+    parser.add_argument("--output_path", metavar="", type=str, default="results.yaml")
     parser.add_argument("--labels", metavar="", type=str, required=True)
 
     args = parser.parse_args()
@@ -82,8 +82,7 @@ if __name__ == "__main__":
 
     # Convert results from JSON to YAML.
     with open(os.path.join(parent_dir, "results.json")) as f, \
-         open(os.path.join(parent_dir, args.output_path), "w"
-    ) as out:
+         open(os.path.join(parent_dir, args.output_path), "w") as out:
         results = json.load(f)
         yaml.dump(results, out)
 
