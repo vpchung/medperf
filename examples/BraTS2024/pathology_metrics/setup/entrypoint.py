@@ -22,7 +22,7 @@ def _extract_value_by_pattern(col, pattern_to_extract):
 
 def create_csv(predictions, labels, parent):
     """A function that creates a ./data.csv file from input folders."""
-    pattern = r"BraTSPath_Test_\d{7}\.png$"
+    pattern = r"(BraTSPath_Test_\d{7}\.png$)"
     penalty_label = 6
 
     # Read in predictions file and validate it.
