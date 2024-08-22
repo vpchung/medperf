@@ -89,8 +89,8 @@ if __name__ == "__main__":
     run_gandlf(args.output_file, args.config, parent_dir)
 
     # Convert results from JSON to YAML.
-    with open(os.path.join(parent_dir, 'results.json')) as f, \
-         open(args.output_path, "w") as out:
+    with open(os.path.join(parent_dir, "results.json")) as f, \
+         open(os.path.join(parent_dir, args.output_path), "w") as out:
         results = json.load(f)
         yaml.dump(results, out)
 
