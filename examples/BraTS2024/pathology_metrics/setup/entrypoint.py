@@ -18,7 +18,7 @@ def _extract_value_by_pattern(col, pattern_to_extract):
     return col.str.extract(pattern_to_extract)
 
 
-def create_csv(predictions, labels):
+def create_csv(predictions, labels, parent):
     """A function that creates a ./data.csv file from input folders."""
     pattern = r"BraTSPath_Test_\d{7}\.png$"
     penalty_label = 6
@@ -53,10 +53,10 @@ def create_csv(predictions, labels):
     # Reassign coltype to int, since NaN values will convert coltype to float
     # before outputting to 3-col CSV.
     res["Prediction"] = res["Prediction"].astype(int)
-    res.to_csv("./data.csv", index=False)
+    res.to_csv(os.path.join(parent, "data.csv"), index=False)
 
 
-def run_gandlf(output_file, config):
+def run_gandlf(output_file, config, parent):
     """
     A function that calls GaNDLF's generate metrics command with the previously created csv.
 
@@ -65,7 +65,9 @@ def run_gandlf(output_file, config):
         config (str): The path to the parameters file
     """
     exit_status = os.system(
-        f"gandlf generate-metrics -c {config} -i ./data.csv -o {output_file}"
+        f"gandlf generate-metrics -c {config} -i " +
+        os.path.join(parent, "data.csv") +
+        f" -o {os.path.join(parent, 'results.json')}"
     )
     exit_code = os.WEXITSTATUS(exit_status)
     logging.info(exit_code)
@@ -79,6 +81,7 @@ if __name__ == "__main__":
     parser.add_argument("--labels", metavar="", type=str, required=True)
 
     args = parser.parse_args()
+    parent_dir = "/mlcube_io2"
 
-    create_csv(args.predictions, args.labels)
-    run_gandlf(args.output_file, args.config)
+    create_csv(args.predictions, args.labels, parent_dir)
+    run_gandlf(args.output_file, args.config, parent_dir)
