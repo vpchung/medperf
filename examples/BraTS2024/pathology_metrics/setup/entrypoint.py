@@ -59,9 +59,9 @@ def run_gandlf(config, parent):
         config (str): The path to the parameters file
     """
     exit_status = os.system(
-        f"gandlf generate-metrics -c {config} -i " +
+        f"gandlf generate-metrics -c {config} -i "
         + os.path.join(parent, "data.csv")
-        f" -o {os.path.join(parent, 'results.json')}"
+        + f" -o {os.path.join(parent, 'results.json')}"
     )
     exit_code = os.WEXITSTATUS(exit_status)
     logging.info(exit_code)
@@ -82,7 +82,8 @@ if __name__ == "__main__":
 
     # Convert results from JSON to YAML.
     with open(os.path.join(parent_dir, "results.json")) as f, \
-         open(os.path.join(parent_dir, args.output_path), "w") as out:
+         open(os.path.join(parent_dir, args.output_path), "w"
+    ) as out:
         results = json.load(f)
         yaml.dump(results, out)
 
