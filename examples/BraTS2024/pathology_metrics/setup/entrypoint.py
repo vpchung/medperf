@@ -12,7 +12,6 @@ from glob import glob
 
 import pandas as pd
 import yaml
-from cnb_tools import validation_toolkit as vtk
 
 
 def _extract_value_by_pattern(col, pattern_to_extract):
@@ -30,26 +29,19 @@ def create_csv(predictions, labels, parent):
     assert len(pred_file) == 1, "There should only be one predictions CSV file"
     try:
         pred = pd.read_csv(pred_file[0], usecols=["SubjectID", "Prediction"])
-        pred["SubjectID"] = _extract_value_by_pattern(
-            pred.loc[:, "SubjectID"], pattern
-        )
+        pred["SubjectID"] = _extract_value_by_pattern(pred.loc[:, "SubjectID"], pattern)
     except ValueError as exc:
         raise ValueError(
             "Predictions file missing two required columns: `SubjectID` "
             "and `Prediction` (case-sensitive)"
         ) from exc
-    assert (
-        vtk.check_duplicate_keys(pred["SubjectID"]) == ""
-    ), "Duplicate SubjectIDs found"
-    assert (
-        vtk.check_values_range(pred["Prediction"], min_val=0, max_val=5) == ""
-    ), "'Prediction' should be integers between 0 and 5"
+    assert not pred["SubjectID"].duplicated().any(), "Duplicate SubjectIDs found"
+    assert ((pred["Prediction"] >= 0).all() and (pred["Prediction"] <= 5).all()), \
+        "'Prediction' should be integers between 0 and 5"
 
     # Read in labels file and combine it with the predictions file.
     gold = pd.read_csv(os.path.join(labels, "BraTS-PATH-Test-Labels.csv"))
-    gold["SubjectID"] = _extract_value_by_pattern(
-        gold.loc[:, "SubjectID"], pattern
-    )
+    gold["SubjectID"] = _extract_value_by_pattern(gold.loc[:, "SubjectID"], pattern)
     res = gold.merge(pred, how="left", on="SubjectID").fillna(penalty_label)
 
     # Reassign coltype to int, since NaN values will convert coltype to float
