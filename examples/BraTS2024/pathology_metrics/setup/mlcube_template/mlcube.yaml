@@ -9,7 +9,7 @@
 name: MLCommons GaNDLF BraTS2024 Pathology Metrics
 description: Contains functionality for calculating BraTS2024 pathology metrics.
 authors: 
- - {name: "MLCommons Medical Working Group", email: "gandlf@mlcommons.org", org: "MLCommons" }
+ - {name: "Sage Challenges and Benchmarking Team", email: "cnb@sagebase.org", org: "Sage Bionetworks" }
 
 ## Specifies hardware and software requirements.
 platform:
@@ -46,4 +46,4 @@ tasks:
         # GaNDLF config file. The name should be `parameters.yaml`
         config: {type: file, default: parameters.yaml}
       }
-      outputs: { output-file: { type: "file", default: "results.yaml" } }
+      outputs: { output_path: { type: "file", default: "results.yaml" } }
