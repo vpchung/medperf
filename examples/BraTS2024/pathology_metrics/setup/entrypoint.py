@@ -5,11 +5,13 @@ This script should expect the same arguments passed to the command `mlcube run -
 i.e. it should expect the inputs and outputs defined in `mlcube.yaml` in the `evaluate` task"""
 
 import argparse
+import json
 import logging
 import os
 from glob import glob
 
 import pandas as pd
+import yaml
 from cnb_tools import validation_toolkit as vtk
 
 
