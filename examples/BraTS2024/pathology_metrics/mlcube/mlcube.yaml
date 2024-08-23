@@ -1,0 +1,27 @@
+name: MLCommons GaNDLF BraTS2024 Pathology Metrics
+description: Contains functionality for calculating BraTS2024 pathology metrics.
+authors:
+- name: Sage CNB Team
+  email: cnb@sagebase.org
+  org: Sage Bionetworks
+platform:
+  accelerator_count: 0
+docker:
+  image: ghcr.io/vpchung/brats2024-path-metrics:0.0.0
+  build_context: ../
+  build_file: Dockerfile-CPU
+  build_strategy: auto
+tasks:
+  evaluate:
+    entrypoint: python3.9 /entrypoint.py
+    parameters:
+      inputs:
+        predictions: predictions/
+        labels: labels/
+        config:
+          type: file
+          default: parameters.yaml
+      outputs:
+        output_path:
+          type: file
+          default: results.yaml
