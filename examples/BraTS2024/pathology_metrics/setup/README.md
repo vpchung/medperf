@@ -16,7 +16,7 @@ the labels file.  Save under `setup`:
 
     ```
     setup/
-    ├── entrypoint.py
+    ├── entrypoint.py  ←- 
     └── mlcube_template
         ├── mlcube.yaml
         └── workspace
@@ -50,4 +50,49 @@ the labels file.  Save under `setup`:
     cd ../mlcube
     mlcube configure -Pdocker.build_strategy=always \
         && mlcube run --task evaluate
+    ```
+
+    Before testing the MLCube, add a dummy predictions and labels files to `mlcube/workspace`
+    so that it looks something like this:
+
+    ```
+    mlcube/
+    ├── mlcube.yaml
+    └── workspace
+        ├── labels  ←- 
+        │   └── BraTS-PATH-Sample-Labels.csv  ←- 
+        ├── parameters.yaml
+        └── predictions  ←- 
+            └── predictions.csv  ←- 
+    ```
+
+    **predictions.csv**
+    ```csv
+    SubjectID,Prediction
+    BraTSPath_sample_0000001.png,0
+    BraTSPath_sample_0000002.png,0
+    BraTSPath_sample_0000003.png,0
+    ```
+
+    **BraTS-PATH-Sample-Labels.csv**
+    ```csv
+    SubjectID,Target
+    BraTSPath_sample_0000001.png,0
+    BraTSPath_sample_0000002.png,1
+    BraTSPath_sample_0000003.png,0
+    ```
+
+    If successful, a final output file named `results.yaml` will output
+    to `mlcube/workspace`:
+
+    ```
+    mlcube/
+    ├── mlcube.yaml
+    └── workspace
+        ├── labels
+        │   └── BraTS-PATH-Sample-Labels.csv
+        ├── parameters.yaml
+        ├── predictions
+        │   └── predictions.csv
+        └── results.yaml  ←- 
     ```
