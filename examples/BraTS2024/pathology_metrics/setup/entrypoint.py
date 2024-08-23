@@ -21,7 +21,7 @@ def _extract_value_by_pattern(col, pattern_to_extract):
 
 def create_csv(predictions, labels, parent):
     """A function that creates a ./data.csv file from input folders."""
-    pattern = r"(BraTSPath_Test_\d{7}\.png$)"
+    pattern = r"(BraTSPath_.*_\d{7}\.png$)"
     penalty_label = 6
 
     # Read in predictions file and validate it.
@@ -40,7 +40,8 @@ def create_csv(predictions, labels, parent):
         "'Prediction' should be integers between 0 and 5"
 
     # Read in labels file and combine it with the predictions file.
-    gold = pd.read_csv(os.path.join(labels, "BraTS-PATH-Test-Labels.csv"))
+    gold_file = glob(os.path.join(labels, "BraTS-PATH-*-Labels.csv"))
+    gold = pd.read_csv(gold_file[0])
     gold["SubjectID"] = _extract_value_by_pattern(gold.loc[:, "SubjectID"], pattern)
     res = gold.merge(pred, how="left", on="SubjectID").fillna(penalty_label)
 
