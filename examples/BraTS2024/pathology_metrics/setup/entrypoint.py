@@ -40,7 +40,7 @@ def create_csv(predictions, labels, parent):
         "'Prediction' should be integers between 0 and 5"
 
     # Read in labels file and combine it with the predictions file.
-    gold_file = glob(os.path.join(labels, "BraTS-PATH-*-Labels.csv"))
+    gold_file = glob(os.path.join(labels, "*.csv"))
     gold = pd.read_csv(gold_file[0])
     gold["SubjectID"] = _extract_value_by_pattern(gold.loc[:, "SubjectID"], pattern)
     res = gold.merge(pred, how="left", on="SubjectID").fillna(penalty_label)
