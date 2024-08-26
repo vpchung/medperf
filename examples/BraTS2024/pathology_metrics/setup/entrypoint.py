@@ -9,6 +9,7 @@ import json
 import logging
 import os
 from glob import glob
+from pathlib import Path
 
 import pandas as pd
 import yaml
@@ -72,11 +73,11 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--parameters_file", metavar="", type=str, required=True)
     parser.add_argument("--predictions", metavar="", type=str, required=True)
-    parser.add_argument("--output_path", metavar="", type=str)
+    parser.add_argument("--output_path", metavar="", type=str, default="results.yaml")
     parser.add_argument("--labels", metavar="", type=str, required=True)
 
     args = parser.parse_args()
-    parent_dir = args.output_path
+    parent_dir = Path(args.output_path).parent.absolute()
 
     create_csv(args.predictions, args.labels, parent_dir)
     run_gandlf(args.parameters_file, parent_dir)
@@ -84,7 +85,7 @@ if __name__ == "__main__":
     # Convert results from JSON to YAML.
     output_file = os.path.join(parent_dir, "results.yaml")
     with open(os.path.join(parent_dir, "results.json")) as f, \
-         open(output_file, "w") as out:
+         open(os.path.join(parent_dir, output_file), "w") as out:
         results = json.load(f)
         yaml.dump(results, out)
 
