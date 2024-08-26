@@ -46,4 +46,4 @@ tasks:
         # GaNDLF config file. The name should be `parameters.yaml`
         config: {type: file, default: parameters.yaml}
       }
-      outputs: { output_path: { type: "file", default: "results.yaml" } }
+      outputs: { output_path: { type: "directory" } }
