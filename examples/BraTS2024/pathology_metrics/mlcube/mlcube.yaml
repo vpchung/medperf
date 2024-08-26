@@ -23,5 +23,4 @@ tasks:
           default: parameters.yaml
       outputs:
         output_path:
-          type: file
-          default: results.yaml
+          type: directory
