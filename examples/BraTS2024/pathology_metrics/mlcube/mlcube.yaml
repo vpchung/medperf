@@ -18,9 +18,10 @@ tasks:
       inputs:
         predictions: predictions/
         labels: labels/
-        config:
+        parameters_file:
           type: file
           default: parameters.yaml
       outputs:
         output_path:
-          type: directory
+          type: file
+          default: results.yaml
