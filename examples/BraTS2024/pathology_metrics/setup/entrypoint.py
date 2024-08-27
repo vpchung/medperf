@@ -73,7 +73,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--parameters_file", metavar="", type=str, required=True)
     parser.add_argument("--predictions", metavar="", type=str, required=True)
-    parser.add_argument("--output_path", metavar="", type=str, default="results.yaml")
+    parser.add_argument("--output_path", metavar="", type=str)
     parser.add_argument("--labels", metavar="", type=str, required=True)
 
     args = parser.parse_args()
@@ -83,9 +83,8 @@ if __name__ == "__main__":
     run_gandlf(args.parameters_file, parent_dir)
 
     # Convert results from JSON to YAML.
-    output_file = os.path.join(parent_dir, "results.yaml")
     with open(os.path.join(parent_dir, "results.json")) as f, \
-         open(os.path.join(parent_dir, output_file), "w") as out:
+         open(args.output_path, "w") as out:
         results = json.load(f)
         yaml.dump(results, out)
 
